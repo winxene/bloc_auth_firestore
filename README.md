@@ -6,11 +6,14 @@ This project is an example of implementing the BLoC (Business Logic Component) p
 
 The project is structured as follows:
 
-- `lib/`: This is where the main code of the application resides.
+- `lib/`: This is where the main code of the application resides.  
   - `bloc/`: Contains the BLoC classes for managing app state.
   - `models/`: Contains the data models used in the application.
   - `screens/`: Contains the UI screens of the application.
-  - `services/`: Contains the services used for Firebase Authentication and Firestore.
+  - `manager/`: Contains the manager used for Firebase Authentication and Firestore.
+  - `features/`: Contains the different features of the application, each feature is isolated and independent from others.
+  - `shared/`: Contains the code that is shared across multiple features such as widgets, utilities, and constants.
+  - `core/`: Contains the core functionalities that are used throughout the application such as network requests, local storage, and authentication.
 - `test/`: Contains the unit tests for the application.
 - `pubspec.yaml`: The file for managing Dart packages for the application.
 
