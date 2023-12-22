@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "750854265983",
+    "project_id": "auth-firestore-test-fea30",
+    "storage_bucket": "auth-firestore-test-fea30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750854265983:android:d9a2a2e7e975c7d4f7734a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_auth_firestore_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJyaaBDTaewZdd9v18YdOwAtEp3SZuae0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
