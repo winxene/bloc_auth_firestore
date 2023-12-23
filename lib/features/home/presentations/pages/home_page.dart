@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth_firestore_test/core/auth/auth_manager.dart';
 
 class HomePage extends StatelessWidget {
-  final AuthManager authManager;
-
-  const HomePage(this.authManager, {Key? key}) : super(key: key);
+  final AuthManager _authManager = AuthManager();
 
   //static route to home page
   static const routeName = '/home';
@@ -25,14 +23,15 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Email: ${authManager.getCurrentUser()?.email}',
-              style: TextStyle(fontSize: 16),
+              'Email: ${_authManager.getCurrentUser()?.email}',
+              style: const TextStyle(fontSize: 16),
             ),
             ElevatedButton(
               onPressed: () {
-                authManager.signOut(); // TODO: Implement logout functionality
+                _authManager.signOut();
+                Navigator.of(context).pushReplacementNamed('/auth');
               },
-              child: Text('Logout'),
+              child: const Text('Logout'),
             ),
           ],
         ),
