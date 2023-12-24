@@ -33,6 +33,11 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('Logout'),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/firestore-example');
+                },
+                child: const Text('Firestore Example')),
           ],
         ),
       ),
