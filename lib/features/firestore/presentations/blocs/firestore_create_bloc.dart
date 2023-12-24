@@ -8,23 +8,20 @@ part 'firestore_create_state.dart';
 class CreateBloc extends Bloc<CreateEvent, CreateState> {
   final CreateUseCase _createUseCase;
 
-  CreateBloc(this._createUseCase) : super(CreateInitial());
-
-  @override
-  Stream<CreateState> mapEventToState(CreateEvent event) async* {
-    if (event is CreateDocumentEvent) {
-      yield CreateLoading();
+  CreateBloc(this._createUseCase) : super(CreateInitial()) {
+    on<CreateDocumentEvent>((event, emit) async {
+      emit(CreateLoading());
       try {
         DataModel dataModel = DataModel(
           name: event.name,
           author: event.author,
           score: event.score,
         );
-        await _createUseCase.execute(dataModel, 'your_collection');
-        yield CreateSuccess();
+        await _createUseCase.execute(dataModel, 'books');
+        emit(CreateSuccess());
       } catch (e) {
-        yield CreateFailure(e.toString());
+        emit(CreateFailure(e.toString()));
       }
-    }
+    });
   }
 }
