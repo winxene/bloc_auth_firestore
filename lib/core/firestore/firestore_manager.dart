@@ -4,17 +4,19 @@ class FirestoreManager {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Get a document
-  Future<DocumentSnapshot> getDocument(String collectionPath, String documentId) {
+  Future<DocumentSnapshot> getDocument(
+      String collectionPath, String documentId) {
     return _firestore.collection(collectionPath).doc(documentId).get();
   }
 
-  // Add a new docuMent
+  // Add a new document
   Future<void> addDocument(String collectionPath, Map<String, dynamic> data) {
     return _firestore.collection(collectionPath).add(data);
   }
 
   // Update an existing document
-  Future<void> updateDocument(String collectionPath, String documentId, Map<String, dynamic> data) {
+  Future<void> updateDocument(
+      String collectionPath, String documentId, Map<String, dynamic> data) {
     return _firestore.collection(collectionPath).doc(documentId).update(data);
   }
 
