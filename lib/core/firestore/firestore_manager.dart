@@ -24,4 +24,9 @@ class FirestoreManager {
   Future<void> deleteDocument(String collectionPath, String documentId) {
     return _firestore.collection(collectionPath).doc(documentId).delete();
   }
+
+  // Get a collection
+  CollectionReference getCollection(String collectionPath) {
+    return _firestore.collection(collectionPath);
+  }
 }
