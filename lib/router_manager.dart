@@ -11,7 +11,9 @@ class RouterManager {
     HomePage.routeName: (BuildContext context) => HomePage(),
     FirestoreExampleScreen.routeName: (BuildContext context) =>
         FirestoreExampleScreen(),
-    FirestoreFormScreen.routeName: (BuildContext context) =>
+    FirestoreFormScreen.createRouteName: (BuildContext context) =>
+        FirestoreFormScreen(),
+    FirestoreFormScreen.editRouteName: (BuildContext context) =>
         FirestoreFormScreen(),
     FirestoreListScreen.routeName: (BuildContext context) =>
         FirestoreListScreen(),
