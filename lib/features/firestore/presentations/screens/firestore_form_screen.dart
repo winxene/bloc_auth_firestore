@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/firestore_bloc.dart';
 import '../widgets/firestore_score_field.dart';
 
-class FirestoreCreateScreen extends StatelessWidget {
+class FirestoreFormScreen extends StatelessWidget {
   static const String routeName = '/firestore-example/create';
 
   final _formKey = GlobalKey<FormState>();
@@ -18,10 +18,10 @@ class FirestoreCreateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _firestoreManager = FirestoreManager();
-    final _createUseCase = CreateUseCase(_firestoreManager);
+    final firestoreManager = FirestoreManager();
+    final createUseCase = CreateUseCase(firestoreManager);
     return BlocProvider(
-      create: (context) => FirestoreBloc(_createUseCase),
+      create: (context) => FirestoreBloc(createUseCase),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Create Document'),
