@@ -24,14 +24,15 @@ class FirestoreCreateScreen extends StatelessWidget {
       create: (context) => CreateBloc(_createUseCase),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Document'),
+          title: const Text('Create Document'),
         ),
         body: BlocConsumer<CreateBloc, CreateState>(
           listener: (context, state) {
             if (state is CreateSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Document created successfully')),
+                const SnackBar(content: Text('Document created successfully')),
               );
+              Navigator.pop(context); // Add this line
             } else if (state is CreateFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -43,7 +44,7 @@ class FirestoreCreateScreen extends StatelessWidget {
             return Form(
               key: _formKey,
               child: ListView(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 children: [
                   TextFormField(
                     controller: _nameController,
