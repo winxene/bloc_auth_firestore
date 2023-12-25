@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_firestore_test/features/firestore/presentations/screens/firestore_form_screen.dart';
 import '../../data/models/data_model.dart';
 import '../../../../core/firestore/firestore_manager.dart';
 import '../../domain/usecases/read_usecase.dart';
@@ -35,11 +36,28 @@ class FirestoreListScreen extends StatelessWidget {
               return ListTile(
                 title: Text('Name: ${model.name}, Author: ${model.author}'),
                 subtitle: Text('Scores: ${model.score.toString()}'),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    _deleteUseCase.deleteDocument('books', model.id);
-                  },
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                FirestoreFormScreen(model: model),
+                          ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        _deleteUseCase.deleteDocument('books', model.id);
+                      },
+                    ),
+                  ],
                 ),
               );
             },
