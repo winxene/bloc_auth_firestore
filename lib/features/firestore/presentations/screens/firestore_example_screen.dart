@@ -19,13 +19,14 @@ class FirestoreExampleScreen extends StatelessWidget {
                   Navigator.of(context)
                       .pushReplacementNamed('/firestore-example/create');
                 },
-                child: const Text('Create')),
+                child: const Text('Create New')),
             //Button to show list (Read)
-            ElevatedButton(onPressed: () {}, child: const Text('Read')),
-            //Button to update (Update)
-            ElevatedButton(onPressed: () {}, child: const Text('Update')),
-            //Button to delete (Delete)
-            ElevatedButton(onPressed: () {}, child: const Text('Delete')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed('/firestore-example/list');
+                },
+                child: const Text('List')),
           ],
         ),
       ),

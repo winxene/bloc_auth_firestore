@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_firestore_test/features/auth/presentations/pages/auth_page.dart';
-import 'package:flutter_auth_firestore_test/features/firestore/presentations/screens/firestore_create_screen.dart';
+import 'package:flutter_auth_firestore_test/features/firestore/presentations/screens/firestore_form_screen.dart';
 import 'package:flutter_auth_firestore_test/features/firestore/presentations/screens/firestore_example_screen.dart';
+import 'package:flutter_auth_firestore_test/features/firestore/presentations/screens/firestore_list_screen.dart';
 import 'package:flutter_auth_firestore_test/features/home/presentations/pages/home_page.dart';
 
 class RouterManager {
@@ -10,8 +11,12 @@ class RouterManager {
     HomePage.routeName: (BuildContext context) => HomePage(),
     FirestoreExampleScreen.routeName: (BuildContext context) =>
         FirestoreExampleScreen(),
-    FirestoreCreateScreen.routeName: (BuildContext context) =>
-        FirestoreCreateScreen(),
+    FirestoreFormScreen.createRouteName: (BuildContext context) =>
+        FirestoreFormScreen(),
+    FirestoreFormScreen.editRouteName: (BuildContext context) =>
+        FirestoreFormScreen(),
+    FirestoreListScreen.routeName: (BuildContext context) =>
+        FirestoreListScreen(),
   };
 
   Map<String, WidgetBuilder> getApplicationRoutes() {

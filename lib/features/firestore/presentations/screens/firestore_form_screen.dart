@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_firestore_test/core/firestore/firestore_manager.dart';
 import 'package:flutter_auth_firestore_test/features/firestore/domain/usecases/create_usecase.dart';
+import 'package:flutter_auth_firestore_test/features/firestore/domain/usecases/update_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/create/firestore_create_bloc.dart';
+import '../blocs/firestore_bloc.dart';
 import '../widgets/firestore_score_field.dart';
+import '../../data/models/data_model.dart';
 
-class FirestoreCreateScreen extends StatelessWidget {
-  static const String routeName = '/firestore-example/create';
+class FirestoreFormScreen extends StatelessWidget {
+  static const String createRouteName = '/firestore-example/create';
+  static const String editRouteName = '/firestore-example/edit';
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -16,22 +19,40 @@ class FirestoreCreateScreen extends StatelessWidget {
   final List<TextEditingController> _scoreValueControllers =
       List.generate(3, (index) => TextEditingController());
 
+  final DataModel? model;
+
+  FirestoreFormScreen({this.model});
+
   @override
   Widget build(BuildContext context) {
-    final _firestoreManager = FirestoreManager();
-    final _createUseCase = CreateUseCase(_firestoreManager);
+    final isEditMode = model != null;
+    final firestoreManager = FirestoreManager();
+    final createUseCase = CreateUseCase(firestoreManager);
+    final updateUseCase = UpdateUseCase(firestoreManager);
+
+    if (isEditMode) {
+      _nameController.text = model!.name;
+      _authorController.text = model!.author;
+      var scoreEntries = model!.score.entries.toList();
+      for (var i = 0; i < scoreEntries.length; i++) {
+        _scoreNameControllers[i].text = scoreEntries[i].key;
+        _scoreValueControllers[i].text = scoreEntries[i].value.toString();
+      }
+    }
+
     return BlocProvider(
-      create: (context) => CreateBloc(_createUseCase),
+      create: (context) => FirestoreBloc(createUseCase, updateUseCase),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Document'),
+          title: Text(isEditMode ? 'Edit Document' : 'Create Document'),
         ),
-        body: BlocConsumer<CreateBloc, CreateState>(
+        body: BlocConsumer<FirestoreBloc, CreateState>(
           listener: (context, state) {
             if (state is CreateSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Document created successfully')),
+                const SnackBar(content: Text('Document created successfully')),
               );
+              Navigator.pop(context); // Add this line
             } else if (state is CreateFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -43,7 +64,7 @@ class FirestoreCreateScreen extends StatelessWidget {
             return Form(
               key: _formKey,
               child: ListView(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 children: [
                   TextFormField(
                     controller: _nameController,
@@ -70,9 +91,10 @@ class FirestoreCreateScreen extends StatelessWidget {
                   }).toList(),
                   ElevatedButton(
                     onPressed: state is! CreateLoading
-                        ? () => _createDocument(context)
+                        ? () => _createOrUpdateDocument(context, isEditMode)
                         : null,
-                    child: const Text('Create Document'),
+                    child: Text(
+                        isEditMode ? 'Update Document' : 'Create Document'),
                   ),
                 ],
               ),
@@ -83,16 +105,25 @@ class FirestoreCreateScreen extends StatelessWidget {
     );
   }
 
-  void _createDocument(BuildContext context) {
+  void _createOrUpdateDocument(BuildContext context, bool isEditMode) {
     if (_formKey.currentState!.validate()) {
       Map<String, double> scores = _scoreNameControllers.asMap().map(
           (index, nameController) => MapEntry(nameController.text,
               double.parse(_scoreValueControllers[index].text)));
-      context.read<CreateBloc>().add(CreateDocumentEvent(
-            _nameController.text,
-            _authorController.text,
-            scores,
-          ));
+      if (isEditMode) {
+        context.read<FirestoreBloc>().add(UpdateDocumentEvent(
+              model!.id,
+              _nameController.text,
+              _authorController.text,
+              scores,
+            ));
+      } else {
+        context.read<FirestoreBloc>().add(CreateDocumentEvent(
+              _nameController.text,
+              _authorController.text,
+              scores,
+            ));
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 # Flutter Firestore Authentication with BLoC Pattern
 
-This project is an example of implementing the BLoC (Business Logic Component) pattern in a Flutter application that uses Firestore and Firebase Authentication.
+This project is an example of implementing the BLoC (Business Logic Component) pattern in a Flutter application that uses Firestore and Firebase Authentication. In addition to that, this project complies with clean architecture.
 
 ## Project Structure
 

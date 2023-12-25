@@ -6,7 +6,8 @@ class CreateUseCase {
 
   CreateUseCase(this._firestoreManager);
 
-  Future<void> execute(DataModel dataModel, String collectionPath) {
-    return _firestoreManager.addDocument(collectionPath, dataModel.toMap());
+  Future<void> createDocument(DataModel model, String collectionPath) {
+    return _firestoreManager.addDocument(
+        collectionPath, model.id, model.toMap());
   }
 }
