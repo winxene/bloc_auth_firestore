@@ -16,12 +16,17 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
           name: event.name,
           author: event.author,
           score: event.score,
+          id: uuid(),
         );
-        await _createUseCase.execute(dataModel, 'books');
+        await _createUseCase.createDocument(dataModel, 'books');
         emit(CreateSuccess());
       } catch (e) {
         emit(CreateFailure(e.toString()));
       }
     });
+  }
+
+  String uuid() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
   }
 }

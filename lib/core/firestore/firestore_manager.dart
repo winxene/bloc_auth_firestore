@@ -10,8 +10,9 @@ class FirestoreManager {
   }
 
   // Add a new document
-  Future<void> addDocument(String collectionPath, Map<String, dynamic> data) {
-    return _firestore.collection(collectionPath).add(data);
+  Future<void> addDocument(
+      String collectionPath, String documentId, Map<String, dynamic> data) {
+    return _firestore.collection(collectionPath).doc(documentId).set(data);
   }
 
   // Update an existing document

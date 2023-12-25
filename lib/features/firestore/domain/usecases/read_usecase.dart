@@ -12,10 +12,8 @@ class ReadUseCase {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
-        return DataModel.fromMap(doc.data() as Map<String, dynamic>);
+        return DataModel.fromMap(doc.id, doc.data() as Map<String, dynamic>);
       }).toList();
     });
   }
-
-  //get specific document usecase
 }
