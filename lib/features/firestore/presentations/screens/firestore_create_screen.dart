@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth_firestore_test/core/firestore/firestore_manager.dart';
 import 'package:flutter_auth_firestore_test/features/firestore/domain/usecases/create_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/create/firestore_create_bloc.dart';
+import '../blocs/firestore_bloc.dart';
 import '../widgets/firestore_score_field.dart';
 
 class FirestoreCreateScreen extends StatelessWidget {
@@ -21,12 +21,12 @@ class FirestoreCreateScreen extends StatelessWidget {
     final _firestoreManager = FirestoreManager();
     final _createUseCase = CreateUseCase(_firestoreManager);
     return BlocProvider(
-      create: (context) => CreateBloc(_createUseCase),
+      create: (context) => FirestoreBloc(_createUseCase),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Create Document'),
         ),
-        body: BlocConsumer<CreateBloc, CreateState>(
+        body: BlocConsumer<FirestoreBloc, CreateState>(
           listener: (context, state) {
             if (state is CreateSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +89,7 @@ class FirestoreCreateScreen extends StatelessWidget {
       Map<String, double> scores = _scoreNameControllers.asMap().map(
           (index, nameController) => MapEntry(nameController.text,
               double.parse(_scoreValueControllers[index].text)));
-      context.read<CreateBloc>().add(CreateDocumentEvent(
+      context.read<FirestoreBloc>().add(CreateDocumentEvent(
             _nameController.text,
             _authorController.text,
             scores,

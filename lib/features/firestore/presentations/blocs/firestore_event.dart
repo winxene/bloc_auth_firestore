@@ -1,4 +1,4 @@
-part of 'firestore_create_bloc.dart';
+part of 'firestore_bloc.dart';
 
 abstract class CreateEvent {}
 
